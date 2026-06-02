@@ -8,158 +8,140 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --bg: #0f0f0f; --bg2: #1a1a1a; --bg3: #222;
-    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
-    --text: #f0f0f0; --text2: #888;
-    --accent: #e8d5a3; --accent2: #c4a96b;
-    --danger: #e05555; --danger-bg: rgba(224,85,85,0.12);
-    --radius: 16px; --radius-sm: 10px;
-  }
-  html, body { height: 100%; overflow: hidden; }
-  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #0f0f0f; --bg2: #1a1a1a; --bg3: #222;
+  --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+  --text: #f0f0f0; --text2: #888;
+  --accent: #e8d5a3; --accent2: #c4a96b;
+  --danger: #e05555; --danger-bg: rgba(224,85,85,0.12);
+  --radius: 16px; --radius-sm: 10px;
+}
+html, body { height: 100%; overflow: hidden; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+.screen { display: none; position: fixed; inset: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.screen.active { display: block; }
+.screen-inner { max-width: 480px; margin: 0 auto; padding: 1.5rem 1rem 3rem; min-height: 100%; }
+h1 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1.5rem; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 12px; }
+.label { font-size: 12px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text2); margin-bottom: 10px; display: block; }
+.divider { height: 1px; background: var(--border); margin: 1rem 0; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px 20px; border-radius: var(--radius-sm); border: 1px solid var(--border2);
+  background: transparent; color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn:hover { background: var(--bg3); }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--accent); color: #1a1208; border-color: var(--accent); font-weight: 600; font-family: 'Syne', sans-serif; }
+.btn-primary:hover { background: var(--accent2); border-color: var(--accent2); }
+.btn-danger { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
+.btn-danger:hover { background: rgba(224,85,85,0.2); }
+.btn-ghost { border-color: transparent; color: var(--text2); font-size: 13px; padding: 8px 14px; }
+.btn-ghost:hover { color: var(--text); background: var(--bg3); border-color: var(--border); }
+.btn-full { width: 100%; padding: 16px; font-size: 17px; border-radius: var(--radius); }
+.btn-abort { border-color: transparent; color: var(--text2); font-size: 13px; width: 100%; margin-top: 8px; }
+.btn-abort:hover { color: var(--danger); background: var(--danger-bg); border-color: var(--danger); }
+.btn-back { background: none; border: none; color: var(--text2); font-size: 14px; cursor: pointer; padding: 0 0 1.5rem; display: flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+.btn-back:hover { color: var(--text); }
+.btn-rules { background: rgba(232,213,163,0.08); border: 1px solid rgba(232,213,163,0.2); color: var(--accent); font-size: 14px; width: 100%; margin-top: 8px; border-radius: var(--radius-sm); padding: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.btn-rules:hover { background: rgba(232,213,163,0.15); }
+.btn-chart { background: rgba(255,255,255,0.05); border: 1px solid var(--border2); color: var(--text2); font-size: 14px; width: 100%; margin-top: 8px; border-radius: var(--radius-sm); padding: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.btn-chart:hover { background: var(--bg3); color: var(--text); }
+input[type=text], input[type=number] {
+  width: 100%; padding: 12px 14px; background: var(--bg3); border: 1px solid var(--border2);
+  border-radius: var(--radius-sm); color: var(--text); font-family: 'DM Sans', sans-serif;
+  font-size: 16px; outline: none; transition: border-color 0.15s; -webkit-appearance: none;
+}
+input:focus { border-color: var(--accent); }
+input::placeholder { color: var(--text2); }
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-  .screen {
-    display: none;
-    position: fixed;
-    inset: 0;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  .screen.active { display: block; }
-  .screen-inner {
-    max-width: 480px;
-    margin: 0 auto;
-    padding: 1.5rem 1rem 3rem;
-    min-height: 100%;
-  }
+/* INTRO */
+#screen-intro .screen-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
+#intro-number { font-family: 'Syne', sans-serif; font-size: clamp(96px, 25vw, 140px); font-weight: 800; color: var(--accent); letter-spacing: -4px; line-height: 1; }
+#intro-sub { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--text2); margin-top: 12px; opacity: 0; transition: opacity 0.5s; }
+#intro-btn { margin-top: 3rem; opacity: 0; pointer-events: none; transition: opacity 0.5s 0.3s; min-width: 200px; }
 
-  h1 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1.5rem; }
-  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 12px; }
-  .label { font-size: 12px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text2); margin-bottom: 10px; display: block; }
-  .divider { height: 1px; background: var(--border); margin: 1rem 0; }
+/* COUNT */
+.count-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
+.count-btn { padding: 18px 8px; font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg3); color: var(--text2); cursor: pointer; transition: all 0.15s; text-align: center; -webkit-tap-highlight-color: transparent; }
+.count-btn:hover { background: var(--accent); border-color: var(--accent); color: #1a1208; }
+.count-btn:active { transform: scale(0.95); }
 
-  .btn {
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-    padding: 12px 20px; border-radius: var(--radius-sm); border: 1px solid var(--border2);
-    background: transparent; color: var(--text); font-family: 'DM Sans', sans-serif;
-    font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .btn:hover { background: var(--bg3); }
-  .btn:active { transform: scale(0.97); }
-  .btn-primary { background: var(--accent); color: #1a1208; border-color: var(--accent); font-weight: 600; font-family: 'Syne', sans-serif; }
-  .btn-primary:hover { background: var(--accent2); border-color: var(--accent2); }
-  .btn-danger { border-color: var(--danger); color: var(--danger); background: var(--danger-bg); }
-  .btn-danger:hover { background: rgba(224,85,85,0.2); }
-  .btn-ghost { border-color: transparent; color: var(--text2); font-size: 13px; padding: 8px 14px; }
-  .btn-ghost:hover { color: var(--text); background: var(--bg3); border-color: var(--border); }
-  .btn-full { width: 100%; padding: 16px; font-size: 17px; border-radius: var(--radius); }
-  .btn-abort { border-color: transparent; color: var(--text2); font-size: 13px; width: 100%; margin-top: 8px; }
-  .btn-abort:hover { color: var(--danger); background: var(--danger-bg); border-color: var(--danger); }
-  .btn-back { background: none; border: none; color: var(--text2); font-size: 14px; cursor: pointer; padding: 0 0 1.5rem; display: flex; align-items: center; gap: 6px; font-family: 'DM Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
-  .btn-back:hover { color: var(--text); }
+/* NAMES */
+.player-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.player-row input { flex: 1; }
+.order-btns { display: flex; flex-direction: column; gap: 4px; }
+.order-btn { width: 36px; height: 28px; padding: 0; font-size: 14px; border-radius: 8px; border: 1px solid var(--border2); background: var(--bg3); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.order-btn:hover { background: var(--accent); color: #1a1208; border-color: var(--accent); }
+.order-btn:active { transform: scale(0.93); }
 
-  input[type=text], input[type=number] {
-    width: 100%; padding: 12px 14px; background: var(--bg3); border: 1px solid var(--border2);
-    border-radius: var(--radius-sm); color: var(--text); font-family: 'DM Sans', sans-serif;
-    font-size: 16px; outline: none; transition: border-color 0.15s; -webkit-appearance: none;
-  }
-  input:focus { border-color: var(--accent); }
-  input::placeholder { color: var(--text2); }
-  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+/* GAME */
+.current-card { background: linear-gradient(135deg, #1e1a10, #2a2010); border: 1px solid rgba(232,213,163,0.2); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 12px; text-align: center; }
+.current-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); margin-bottom: 6px; }
+.current-name { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
+.current-pts { font-size: 15px; color: var(--text2); margin-top: 4px; }
+.progress-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-top: 14px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+.warning-bar { display: none; background: var(--danger-bg); border: 1px solid rgba(224,85,85,0.3); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 12px; color: var(--danger); font-size: 14px; font-weight: 500; align-items: center; gap: 8px; }
+.warning-bar.show { display: flex; }
+.score-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.score-row:last-child { border-bottom: none; }
+.score-row.active .s-name { color: var(--accent); font-weight: 700; }
+.s-name { font-size: 15px; color: var(--text); }
+.s-right { display: flex; align-items: center; gap: 10px; }
+.s-pts { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); min-width: 72px; text-align: right; }
+.s-pts.negative { color: var(--danger); }
+.dots { display: flex; gap: 4px; align-items: center; width: 36px; justify-content: flex-end; }
+.dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--border2); background: transparent; flex-shrink: 0; }
+.dot.on { background: var(--danger); border-color: var(--danger); }
+.action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
 
-  /* INTRO */
-  #screen-intro .screen-inner {
-    display: flex; flex-direction: column; align-items: center;
-    justify-content: center; min-height: 100vh; text-align: center;
-  }
-  #intro-number { font-family: 'Syne', sans-serif; font-size: clamp(96px, 25vw, 140px); font-weight: 800; color: var(--accent); letter-spacing: -4px; line-height: 1; }
-  #intro-sub { font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: var(--text2); margin-top: 12px; opacity: 0; transition: opacity 0.5s; }
-  #intro-btn { margin-top: 3rem; opacity: 0; pointer-events: none; transition: opacity 0.5s 0.3s; min-width: 200px; }
+/* WINNER */
+.winner-header { text-align: center; padding: 2rem 0 1.5rem; position: relative; }
+.trophy { font-size: 56px; margin-bottom: 12px; }
+.winner-name { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); }
+.winner-pts { color: var(--text2); margin-top: 4px; font-size: 15px; }
+.podium-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.podium-row:last-child { border-bottom: none; }
+.podium-pos { font-size: 20px; width: 28px; text-align: center; }
+.podium-name { flex: 1; font-size: 15px; }
+.podium-pts { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+.podium-pts.negative { color: var(--danger); }
 
-  /* COUNT */
-  .count-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
-  .count-btn {
-    padding: 18px 8px; font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700;
-    border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg3);
-    color: var(--text2); cursor: pointer; transition: all 0.15s; text-align: center;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .count-btn:hover { background: var(--accent); border-color: var(--accent); color: #1a1208; }
-  .count-btn:active { transform: scale(0.95); }
+/* CANVAS CONFETTI */
+#confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
 
-  /* NAMES */
-  .player-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-  .player-row input { flex: 1; }
-  .order-btns { display: flex; flex-direction: column; gap: 4px; }
-  .order-btn {
-    width: 36px; height: 28px; padding: 0; font-size: 14px; border-radius: 8px;
-    border: 1px solid var(--border2); background: var(--bg3); color: var(--text);
-    cursor: pointer; display: flex; align-items: center; justify-content: center;
-    transition: all 0.15s; -webkit-tap-highlight-color: transparent;
-  }
-  .order-btn:hover { background: var(--accent); color: #1a1208; border-color: var(--accent); }
-  .order-btn:active { transform: scale(0.93); }
+/* CHART */
+#chart-section { display: none; margin-top: 12px; }
+#chart-section.show { display: block; }
+#game-chart { width: 100%; border-radius: var(--radius-sm); }
+.chart-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text2); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
-  /* GAME */
-  .current-card {
-    background: linear-gradient(135deg, #1e1a10, #2a2010);
-    border: 1px solid rgba(232,213,163,0.2); border-radius: var(--radius);
-    padding: 1.5rem; margin-bottom: 12px; text-align: center;
-  }
-  .current-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--accent2); margin-bottom: 6px; }
-  .current-name { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); letter-spacing: -1px; }
-  .current-pts { font-size: 15px; color: var(--text2); margin-top: 4px; }
-  .progress-track { height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-top: 14px; overflow: hidden; }
-  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
+/* MODALS */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); align-items: center; justify-content: center; z-index: 999; padding: 1rem; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.5rem; max-width: 340px; width: 100%; }
+.modal h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+.modal p { color: var(--text2); font-size: 14px; margin-bottom: 1rem; line-height: 1.6; }
+.modal-close { width: 100%; margin-top: 4px; }
+.modal-btns { display: flex; flex-direction: column; gap: 8px; margin-top: 1rem; }
+.rules-section { margin-bottom: 10px; }
+.rules-section strong { color: var(--accent); font-size: 13px; display: block; margin-bottom: 4px; }
+.rules-section p { margin-bottom: 0; }
 
-  .warning-bar {
-    display: none; background: var(--danger-bg); border: 1px solid rgba(224,85,85,0.3);
-    border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 12px;
-    color: var(--danger); font-size: 14px; font-weight: 500; align-items: center; gap: 8px;
-  }
-  .warning-bar.show { display: flex; }
-
-  .score-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
-  .score-row:last-child { border-bottom: none; }
-  .score-row.active .s-name { color: var(--accent); font-weight: 700; }
-  .s-name { font-size: 15px; color: var(--text); }
-  .s-right { display: flex; align-items: center; gap: 10px; }
-  .s-pts { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--text); min-width: 72px; text-align: right; }
-  .s-pts.negative { color: var(--danger); }
-  .dots { display: flex; gap: 4px; align-items: center; width: 36px; justify-content: flex-end; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--border2); background: transparent; flex-shrink: 0; }
-  .dot.on { background: var(--danger); border-color: var(--danger); }
-
-  .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-
-  /* WINNER */
-  .winner-header { text-align: center; padding: 2rem 0 1.5rem; }
-  .trophy { font-size: 56px; margin-bottom: 12px; }
-  .winner-name { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); }
-  .winner-pts { color: var(--text2); margin-top: 4px; font-size: 15px; }
-  .podium-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
-  .podium-row:last-child { border-bottom: none; }
-  .podium-pos { font-size: 20px; width: 28px; text-align: center; }
-  .podium-name { flex: 1; font-size: 15px; }
-  .podium-pts { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
-  .podium-pts.negative { color: var(--danger); }
-
-  /* MODAL */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); align-items: center; justify-content: center; z-index: 999; padding: 1rem; }
-  .modal-overlay.show { display: flex; }
-  .modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.5rem; max-width: 320px; width: 100%; text-align: center; }
-  .modal h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
-  .modal p { color: var(--text2); font-size: 14px; margin-bottom: 1.5rem; line-height: 1.5; }
-  .modal-btns { display: flex; flex-direction: column; gap: 8px; }
-
-  @media (max-width: 380px) { .current-name { font-size: 26px; } }
-  @media (min-width: 600px) { .screen-inner { padding: 2rem 1.5rem 4rem; } .current-name { font-size: 36px; } }
+@media (max-width: 380px) { .current-name { font-size: 26px; } }
+@media (min-width: 600px) { .screen-inner { padding: 2rem 1.5rem 4rem; } .current-name { font-size: 36px; } }
 </style>
 </head>
 <body>
+
+<canvas id="confetti-canvas"></canvas>
 
 <!-- SEITE 1: INTRO -->
 <div id="screen-intro" class="screen active">
@@ -170,7 +152,7 @@
   </div>
 </div>
 
-<!-- SEITE 2: ANZAHL WÄHLEN -->
+<!-- SEITE 2: ANZAHL -->
 <div id="screen-count" class="screen">
   <div class="screen-inner">
     <h1>Spieler einrichten</h1>
@@ -189,7 +171,7 @@
   </div>
 </div>
 
-<!-- SEITE 3: NAMEN EINGEBEN -->
+<!-- SEITE 3: NAMEN -->
 <div id="screen-names" class="screen">
   <div class="screen-inner">
     <button class="btn-back" onclick="show('count')">← Zurück</button>
@@ -199,6 +181,7 @@
       <div id="player-list"></div>
       <div class="divider"></div>
       <button class="btn btn-primary btn-full" onclick="startGame()">Spiel starten</button>
+      <button class="btn-rules" onclick="openRules()">📖 Regeln erklären</button>
     </div>
   </div>
 </div>
@@ -237,11 +220,46 @@
       <div class="winner-pts" id="win-pts"></div>
     </div>
     <div class="card" id="final-board"></div>
-    <button class="btn btn-primary btn-full" style="margin-top:1rem;" onclick="resetGame()">Neues Spiel</button>
+    <button class="btn-chart" onclick="toggleChart()">📈 Spielverlauf anzeigen</button>
+    <div id="chart-section">
+      <div class="card" style="padding:1rem;">
+        <canvas id="game-chart" height="220"></canvas>
+        <div class="chart-legend" id="chart-legend"></div>
+      </div>
+    </div>
+    <button class="btn btn-primary btn-full" style="margin-top:12px;" onclick="resetGame()">Neues Spiel</button>
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL: REGELN -->
+<div class="modal-overlay" id="rules-modal">
+  <div class="modal">
+    <h2>Regeln</h2>
+    <div class="rules-section">
+      <strong>Ziel</strong>
+      <p>Als erster 10.000 Punkte erreichen.</p>
+    </div>
+    <div class="rules-section">
+      <strong>Punkte</strong>
+      <p>Eine 1 = 100 Punkte · Eine 5 = 50 Punkte · Drei Fünfen = 500 Punkte · Straße (1–6) = 1.000 Punkte</p>
+    </div>
+    <div class="rules-section">
+      <strong>Ablauf</strong>
+      <p>Jeder würfelt reihum mit echten Würfeln und gibt seine Punkte in der App ein. Wer keine Punkte macht, drückt "Keine Punkte".</p>
+    </div>
+    <div class="rules-section">
+      <strong>Strafe</strong>
+      <p>Wer 3 Runden in Folge keine Punkte macht, verliert 500 Punkte. Die roten Punkte zeigen wie viele Nullrunden ein Spieler schon hat.</p>
+    </div>
+    <div class="rules-section">
+      <strong>Sieg</strong>
+      <p>Wer zuerst 10.000 Punkte erreicht, gewinnt sofort.</p>
+    </div>
+    <button class="btn btn-full modal-close" onclick="closeRules()">Schließen</button>
+  </div>
+</div>
+
+<!-- MODAL: ABBRUCH -->
 <div class="modal-overlay" id="abort-modal">
   <div class="modal">
     <h2>Spiel abbrechen?</h2>
@@ -255,24 +273,23 @@
 
 <script>
 let players = [], cur = 0, hist = [], gameActive = false;
+let roundLog = [];
 const SAVE_KEY = '10k_save';
+const CHART_COLORS = ['#e8d5a3','#7eb8e8','#7ee8a3','#e87e7e','#c47ee8','#e8b87e','#7ee8e8','#e87eb8'];
 
 window.addEventListener('beforeunload', e => {
   if (gameActive) { e.preventDefault(); e.returnValue = ''; }
 });
 
 function show(id) {
-  document.querySelectorAll('.screen').forEach(s => {
-    s.classList.remove('active');
-    s.scrollTop = 0;
-  });
+  document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); s.scrollTop = 0; });
   const el = document.getElementById('screen-' + id);
   el.classList.add('active');
   el.scrollTop = 0;
 }
 
 function saveState() {
-  try { localStorage.setItem(SAVE_KEY, JSON.stringify({ players, cur, hist })); } catch(e) {}
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify({ players, cur, hist, roundLog })); } catch(e) {}
 }
 function loadState() {
   try {
@@ -280,21 +297,14 @@ function loadState() {
     if (!raw) return false;
     const s = JSON.parse(raw);
     if (!s.players || !s.players.length) return false;
-    players = s.players; cur = s.cur; hist = s.hist || [];
+    players = s.players; cur = s.cur; hist = s.hist || []; roundLog = s.roundLog || [];
     return true;
   } catch(e) { return false; }
 }
-function clearState() {
-  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
-}
+function clearState() { try { localStorage.removeItem(SAVE_KEY); } catch(e) {} }
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (loadState()) {
-    gameActive = true;
-    renderGame();
-    show('game');
-    return;
-  }
+  if (loadState()) { gameActive = true; renderGame(); show('game'); return; }
   runIntro();
 });
 
@@ -355,14 +365,19 @@ function startGame() {
     score: 0, streak: 0
   }));
   cur = 0; hist = []; gameActive = true;
+  roundLog = [players.map(p => ({ name: p.name, score: 0 }))];
   saveState();
   renderGame();
   show('game');
 }
 
 function saveHist() {
-  hist.push({ players: JSON.parse(JSON.stringify(players)), cur });
+  hist.push({ players: JSON.parse(JSON.stringify(players)), cur, roundLog: JSON.parse(JSON.stringify(roundLog)) });
   if (hist.length > 60) hist.shift();
+}
+
+function logRound() {
+  roundLog.push(players.map(p => ({ name: p.name, score: p.score })));
 }
 
 function renderGame() {
@@ -373,7 +388,6 @@ function renderGame() {
   document.getElementById('cur-progress').style.width = pct + '%';
   const wb = document.getElementById('warn-bar');
   p.streak === 2 ? wb.classList.add('show') : wb.classList.remove('show');
-
   document.getElementById('scoreboard').innerHTML = players.map((pl, i) => {
     const dots = [0,1,2].map(d => `<span class="dot ${d < pl.streak ? 'on' : ''}"></span>`).join('');
     return `<div class="score-row ${i===cur?'active':''}">
@@ -384,7 +398,6 @@ function renderGame() {
       </div>
     </div>`;
   }).join('');
-
   document.getElementById('pts-input').value = '';
   setTimeout(() => document.getElementById('pts-input').focus(), 50);
 }
@@ -396,6 +409,7 @@ function confirmPoints() {
   saveHist();
   players[cur].score += val;
   players[cur].streak = 0;
+  logRound();
   if (players[cur].score >= 10000) { showWinner(); return; }
   cur = (cur + 1) % players.length;
   saveState();
@@ -409,6 +423,7 @@ function noPoints() {
     players[cur].score -= 500;
     players[cur].streak = 0;
   }
+  logRound();
   cur = (cur + 1) % players.length;
   saveState();
   renderGame();
@@ -419,10 +434,13 @@ function undoLast() {
   const prev = hist.pop();
   players = prev.players;
   cur = prev.cur;
+  roundLog = prev.roundLog;
   saveState();
   renderGame();
 }
 
+function openRules() { document.getElementById('rules-modal').classList.add('show'); }
+function closeRules() { document.getElementById('rules-modal').classList.remove('show'); }
 function askAbort() { document.getElementById('abort-modal').classList.add('show'); }
 function closeModal() { document.getElementById('abort-modal').classList.remove('show'); }
 function confirmAbort() { closeModal(); resetGame(); }
@@ -441,13 +459,157 @@ function showWinner() {
       <div class="podium-name">${pl.name}</div>
       <div class="podium-pts ${pl.score<0?'negative':''}">${pl.score.toLocaleString('de-DE')}</div>
     </div>`).join('');
+  document.getElementById('chart-section').classList.remove('show');
   show('winner');
+  setTimeout(launchConfetti, 300);
+}
+
+function toggleChart() {
+  const sec = document.getElementById('chart-section');
+  const isShown = sec.classList.contains('show');
+  if (isShown) {
+    sec.classList.remove('show');
+    document.querySelector('.btn-chart').textContent = '📈 Spielverlauf anzeigen';
+  } else {
+    sec.classList.add('show');
+    document.querySelector('.btn-chart').textContent = '📈 Spielverlauf ausblenden';
+    drawChart();
+  }
+}
+
+function drawChart() {
+  const canvas = document.getElementById('game-chart');
+  const ctx = canvas.getContext('2d');
+  const dpr = window.devicePixelRatio || 1;
+  const w = canvas.offsetWidth;
+  const h = 220;
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  ctx.scale(dpr, dpr);
+
+  const rounds = roundLog.length;
+  const names = players.map(p => p.name);
+  const allScores = roundLog.map(r => r.map(p => p.score));
+  const allVals = allScores.flat();
+  const minVal = Math.min(0, ...allVals);
+  const maxVal = Math.max(1000, ...allVals);
+  const pad = { top: 20, right: 20, bottom: 30, left: 50 };
+  const chartW = w - pad.left - pad.right;
+  const chartH = h - pad.top - pad.bottom;
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (chartH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + chartW, y); ctx.stroke();
+    const val = Math.round(maxVal - ((maxVal - minVal) / 4) * i);
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.font = '11px DM Sans, sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(val.toLocaleString('de-DE'), pad.left - 6, y + 4);
+  }
+
+  // 10k line
+  const tenKY = pad.top + chartH - ((10000 - minVal) / (maxVal - minVal)) * chartH;
+  if (tenKY >= pad.top && tenKY <= pad.top + chartH) {
+    ctx.strokeStyle = 'rgba(232,213,163,0.25)';
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(pad.left, tenKY); ctx.lineTo(pad.left + chartW, tenKY); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Lines per player
+  names.forEach((name, pi) => {
+    const color = CHART_COLORS[pi % CHART_COLORS.length];
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    roundLog.forEach((round, ri) => {
+      const x = pad.left + (ri / Math.max(rounds - 1, 1)) * chartW;
+      const score = round[pi] ? round[pi].score : 0;
+      const y = pad.top + chartH - ((score - minVal) / (maxVal - minVal)) * chartH;
+      ri === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Dots
+    roundLog.forEach((round, ri) => {
+      const x = pad.left + (ri / Math.max(rounds - 1, 1)) * chartW;
+      const score = round[pi] ? round[pi].score : 0;
+      const y = pad.top + chartH - ((score - minVal) / (maxVal - minVal)) * chartH;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  });
+
+  // X axis labels
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  ctx.font = '11px DM Sans, sans-serif';
+  ctx.textAlign = 'center';
+  const step = Math.max(1, Math.floor(rounds / 6));
+  for (let i = 0; i < rounds; i += step) {
+    const x = pad.left + (i / Math.max(rounds - 1, 1)) * chartW;
+    ctx.fillText('R' + (i + 1), x, h - 8);
+  }
+
+  // Legend
+  const legend = document.getElementById('chart-legend');
+  legend.innerHTML = names.map((name, i) =>
+    `<div class="legend-item"><div class="legend-dot" style="background:${CHART_COLORS[i % CHART_COLORS.length]}"></div>${name}</div>`
+  ).join('');
+}
+
+// CONFETTI
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#e8d5a3','#c4a96b','#f0e6c0','#d4b87a','#fff8e7','#b8972f'];
+  for (let i = 0; i < 120; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 4 + 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 3,
+      vy: Math.random() * 3 + 2,
+      alpha: 1,
+      spin: (Math.random() - 0.5) * 0.2
+    });
+  }
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.alpha -= 0.008;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, p.alpha);
+      ctx.fillStyle = p.color;
+      ctx.shadowColor = p.color;
+      ctx.shadowBlur = 6;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    });
+    frame++;
+    if (frame < 180) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  draw();
 }
 
 function resetGame() {
   gameActive = false;
   clearState();
-  players = []; cur = 0; hist = [];
+  players = []; cur = 0; hist = []; roundLog = [];
   show('count');
 }
 </script>
