@@ -102,6 +102,16 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .input-error { font-size: 13px; color: var(--danger); margin-top: -6px; margin-bottom: 8px; display: none; }
 .input-error.show { display: block; }
 input.error { border-color: var(--danger); }
+.pts-display { font-family: "Syne", sans-serif; font-size: 36px; font-weight: 800; color: var(--accent); text-align: center; padding: 12px 0 8px; letter-spacing: -1px; }
+.pts-btn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 4px; }
+.pts-btn { padding: 14px 8px; font-family: "Syne", sans-serif; font-size: 16px; font-weight: 700; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg3); color: var(--accent); cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.pts-btn:hover { background: rgba(232,213,163,0.12); border-color: var(--accent); }
+.pts-btn:active { transform: scale(0.95); }
+.pts-btn-wide { grid-column: span 2; }
+.pts-btn-reset { color: var(--danger); border-color: rgba(224,85,85,0.3); background: var(--danger-bg); }
+.pts-btn-reset:hover { background: rgba(224,85,85,0.2); }
+.btn-mode-toggle { background: none; border: none; color: var(--text2); font-size: 12px; width: 100%; margin-top: 10px; padding: 6px; cursor: pointer; font-family: "DM Sans", sans-serif; letter-spacing: 0.3px; -webkit-tap-highlight-color: transparent; }
+.btn-mode-toggle:hover { color: var(--text); }
 
 /* WINNER */
 .winner-header { text-align: center; padding: 2rem 0 1.5rem; position: relative; }
@@ -201,16 +211,33 @@ input.error { border-color: var(--danger); }
     <div class="warning-bar" id="warn-bar">⚠️ Achtung – bereits 2x keine Punkte!</div>
     <div class="card" id="scoreboard"></div>
     <div class="card">
-      <span class="label">Punkte dieser Runde</span>
-      <input type="number" id="pts-input" placeholder="z.B. 250" inputmode="numeric"
-        onkeydown="if(event.key==='Enter') confirmPoints()" style="margin-bottom:8px;" oninput="clearError()" />
-      <div class="input-error" id="pts-error">⚠️ Nur Vielfache von 50 sind gültig (z.B. 50, 100, 150…)</div>
-      <div class="action-row">
+      <span class="label" id="input-label">Punkte dieser Runde</span>
+
+      <div id="mode-text">
+        <input type="number" id="pts-input" placeholder="z.B. 250" inputmode="numeric"
+          onkeydown="if(event.key==='Enter') confirmPoints()" style="margin-bottom:8px;" oninput="clearError()" />
+        <div class="input-error" id="pts-error">Nur Vielfache von 50 sind gültig (z.B. 50, 100, 150)</div>
+      </div>
+
+      <div id="mode-buttons" style="display:none;">
+        <div class="pts-display" id="pts-display">0</div>
+        <div class="pts-btn-grid">
+          <button class="pts-btn" onclick="addPts(50)">+50</button>
+          <button class="pts-btn" onclick="addPts(100)">+100</button>
+          <button class="pts-btn" onclick="addPts(200)">+200</button>
+          <button class="pts-btn" onclick="addPts(500)">+500</button>
+          <button class="pts-btn pts-btn-wide" onclick="addPts(1000)">+1000</button>
+          <button class="pts-btn pts-btn-reset" onclick="resetPts()">Reset</button>
+        </div>
+      </div>
+
+      <div class="action-row" style="margin-top:10px;">
         <button class="btn btn-ghost" onclick="undoLast()">← Zurück</button>
         <button class="btn btn-danger" onclick="noPoints()">Keine Punkte</button>
       </div>
       <button class="btn btn-primary btn-full" onclick="confirmPoints()">Bestätigen</button>
       <button class="btn btn-abort" onclick="askAbort()">Spiel abbrechen</button>
+      <button class="btn-mode-toggle" onclick="openModeSelect()">Eingabemodus ändern</button>
     </div>
   </div>
 </div>
@@ -272,6 +299,18 @@ input.error { border-color: var(--danger); }
       <p>Wer zuerst 10.000 Punkte erreicht, gewinnt sofort.</p>
     </div>
     <button class="btn btn-full modal-close" onclick="closeRules()">Schließen</button>
+  </div>
+</div>
+
+<!-- MODAL: EINGABEMODUS -->
+<div class="modal-overlay" id="mode-modal">
+  <div class="modal">
+    <h2>Eingabemodus</h2>
+    <p>Wie möchtest du Punkte eingeben?</p>
+    <div class="modal-btns">
+      <button class="btn btn-full" onclick="setMode('text')">Zahlen eingeben</button>
+      <button class="btn btn-full" onclick="setMode('buttons')">Buttons</button>
+    </div>
   </div>
 </div>
 
@@ -414,8 +453,39 @@ function renderGame() {
       </div>
     </div>`;
   }).join('');
-  document.getElementById('pts-input').value = '';
-  setTimeout(() => document.getElementById('pts-input').focus(), 50);
+  applyMode();
+  if (inputMode === 'text') { document.getElementById('pts-input').value = ''; setTimeout(() => document.getElementById('pts-input').focus(), 50); }
+}
+
+let inputMode = localStorage.getItem("10k_input_mode") || "text";
+let btnPts = 0;
+
+function openModeSelect() {
+  document.getElementById('mode-modal').classList.add('show');
+}
+function closeModeModal() {
+  document.getElementById('mode-modal').classList.remove('show');
+}
+function setMode(mode) {
+  inputMode = mode;
+  localStorage.setItem("10k_input_mode", mode);
+  applyMode();
+  closeModeModal();
+}
+function applyMode() {
+  const isBtn = inputMode === 'buttons';
+  document.getElementById('mode-text').style.display = isBtn ? 'none' : 'block';
+  document.getElementById('mode-buttons').style.display = isBtn ? 'block' : 'none';
+  btnPts = 0;
+  if (isBtn) document.getElementById('pts-display').textContent = '0';
+}
+function addPts(v) {
+  btnPts += v;
+  document.getElementById('pts-display').textContent = btnPts.toLocaleString('de-DE');
+}
+function resetPts() {
+  btnPts = 0;
+  document.getElementById('pts-display').textContent = '0';
 }
 
 function clearError() {
@@ -429,11 +499,19 @@ function showError() {
 }
 
 function confirmPoints() {
-  const raw = document.getElementById('pts-input').value;
-  const val = parseInt(raw);
-  if (raw === '' || isNaN(val) || val <= 0) { noPoints(); return; }
-  if (val % 50 !== 0) { showError(); return; }
-  clearError();
+  let val;
+  if (inputMode === 'buttons') {
+    val = btnPts;
+    if (val <= 0) { noPoints(); return; }
+  } else {
+    const raw = document.getElementById('pts-input').value;
+    val = parseInt(raw);
+    if (raw === '' || isNaN(val) || val <= 0) { noPoints(); return; }
+    if (val % 50 !== 0) { showError(); return; }
+    clearError();
+  }
+  btnPts = 0;
+  if (inputMode === 'buttons') document.getElementById('pts-display').textContent = '0';
   saveHist();
   players[cur].score += val;
   players[cur].streak = 0;
