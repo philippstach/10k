@@ -26,13 +26,7 @@ h1 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; letter-
 .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; margin-bottom: 12px; }
 .label { font-size: 12px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text2); margin-bottom: 10px; display: block; }
 .divider { height: 1px; background: var(--border); margin: 1rem 0; }
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 12px 20px; border-radius: var(--radius-sm); border: 1px solid var(--border2);
-  background: transparent; color: var(--text); font-family: 'DM Sans', sans-serif;
-  font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s ease;
-  -webkit-tap-highlight-color: transparent;
-}
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 20px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: transparent; color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s ease; -webkit-tap-highlight-color: transparent; }
 .btn:hover { background: var(--bg3); }
 .btn:active { transform: scale(0.97); }
 .btn-primary { background: var(--accent); color: #1a1208; border-color: var(--accent); font-weight: 600; font-family: 'Syne', sans-serif; }
@@ -50,14 +44,13 @@ h1 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; letter-
 .btn-rules:hover { background: rgba(232,213,163,0.15); }
 .btn-chart { background: rgba(255,255,255,0.05); border: 1px solid var(--border2); color: var(--text2); font-size: 14px; width: 100%; margin-top: 8px; border-radius: var(--radius-sm); padding: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
 .btn-chart:hover { background: var(--bg3); color: var(--text); }
-input[type=text], input[type=number] {
-  width: 100%; padding: 12px 14px; background: var(--bg3); border: 1px solid var(--border2);
-  border-radius: var(--radius-sm); color: var(--text); font-family: 'DM Sans', sans-serif;
-  font-size: 16px; outline: none; transition: border-color 0.15s; -webkit-appearance: none;
-}
+input[type=text], input[type=number] { width: 100%; padding: 12px 14px; background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-sm); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 16px; outline: none; transition: border-color 0.15s; -webkit-appearance: none; }
 input:focus { border-color: var(--accent); }
 input::placeholder { color: var(--text2); }
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+.input-error { font-size: 13px; color: var(--danger); margin-top: -6px; margin-bottom: 8px; display: none; }
+.input-error.show { display: block; }
+input.error { border-color: var(--danger); }
 
 /* INTRO */
 #screen-intro .screen-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
@@ -68,7 +61,7 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 /* COUNT */
 .count-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 10px; }
 .count-btn { padding: 18px 8px; font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg3); color: var(--text2); cursor: pointer; transition: all 0.15s; text-align: center; -webkit-tap-highlight-color: transparent; }
-.count-btn:hover { background: var(--accent); border-color: var(--accent); color: #1a1208; }
+.count-btn:hover, .count-btn.selected { background: var(--accent); border-color: var(--accent); color: #1a1208; }
 .count-btn:active { transform: scale(0.95); }
 
 /* NAMES */
@@ -78,6 +71,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .order-btn { width: 36px; height: 28px; padding: 0; font-size: 14px; border-radius: 8px; border: 1px solid var(--border2); background: var(--bg3); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
 .order-btn:hover { background: var(--accent); color: #1a1208; border-color: var(--accent); }
 .order-btn:active { transform: scale(0.93); }
+.dice-mode-row { display: flex; gap: 8px; margin-top: 10px; }
+.dice-mode-btn { flex: 1; padding: 12px 8px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg3); color: var(--text2); font-family: 'DM Sans', sans-serif; font-size: 14px; cursor: pointer; text-align: center; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.dice-mode-btn.selected { background: rgba(232,213,163,0.12); border-color: var(--accent); color: var(--accent); }
 
 /* GAME */
 .current-card { background: linear-gradient(135deg, #1e1a10, #2a2010); border: 1px solid rgba(232,213,163,0.2); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 12px; text-align: center; }
@@ -99,22 +95,47 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--border2); background: transparent; flex-shrink: 0; }
 .dot.on { background: var(--danger); border-color: var(--danger); }
 .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
-.input-error { font-size: 13px; color: var(--danger); margin-top: -6px; margin-bottom: 8px; display: none; }
-.input-error.show { display: block; }
-input.error { border-color: var(--danger); }
-.pts-display { font-family: "Syne", sans-serif; font-size: 36px; font-weight: 800; color: var(--accent); text-align: center; padding: 12px 0 8px; letter-spacing: -1px; }
+.pts-display { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--accent); text-align: center; padding: 12px 0 8px; letter-spacing: -1px; }
 .pts-btn-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 4px; }
-.pts-btn { padding: 14px 8px; font-family: "Syne", sans-serif; font-size: 16px; font-weight: 700; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg3); color: var(--accent); cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
+.pts-btn { padding: 14px 8px; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: var(--bg3); color: var(--accent); cursor: pointer; transition: all 0.15s; -webkit-tap-highlight-color: transparent; }
 .pts-btn:hover { background: rgba(232,213,163,0.12); border-color: var(--accent); }
 .pts-btn:active { transform: scale(0.95); }
 .pts-btn-wide { grid-column: span 2; }
 .pts-btn-reset { color: var(--danger); border-color: rgba(224,85,85,0.3); background: var(--danger-bg); }
-.pts-btn-reset:hover { background: rgba(224,85,85,0.2); }
-.btn-mode-toggle { background: none; border: none; color: var(--text2); font-size: 12px; width: 100%; margin-top: 10px; padding: 6px; cursor: pointer; font-family: "DM Sans", sans-serif; letter-spacing: 0.3px; -webkit-tap-highlight-color: transparent; }
+.btn-mode-toggle { background: none; border: none; color: var(--text2); font-size: 12px; width: 100%; margin-top: 10px; padding: 6px; cursor: pointer; font-family: 'DM Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
 .btn-mode-toggle:hover { color: var(--text); }
 
+/* DIGITAL DICE */
+.dice-area { margin-bottom: 12px; }
+.dice-inherited-banner { background: rgba(232,213,163,0.1); border: 1px solid rgba(232,213,163,0.25); border-radius: var(--radius-sm); padding: 10px 14px; margin-bottom: 10px; font-size: 13px; color: var(--accent); display: none; }
+.dice-inherited-banner.show { display: block; }
+.dice-grid { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 12px 0; }
+.die {
+  width: 64px; height: 64px; border-radius: 12px;
+  background: var(--bg3); border: 2px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.15s; position: relative;
+  color: var(--text); user-select: none; -webkit-tap-highlight-color: transparent;
+}
+.die:active { transform: scale(0.92); }
+.die.held { background: rgba(232,213,163,0.15); border-color: var(--accent); color: var(--accent); }
+.die.rolling { animation: dieRoll 0.5s ease; }
+.die.scoring { border-color: var(--accent2); }
+@keyframes dieRoll {
+  0% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-15deg) scale(0.9); }
+  50% { transform: rotate(15deg) scale(1.1); }
+  75% { transform: rotate(-8deg) scale(0.95); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+.held-label { font-size: 10px; color: var(--accent); position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); white-space: nowrap; letter-spacing: 0.5px; }
+.dice-score-preview { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--accent); text-align: center; margin: 8px 0 4px; letter-spacing: -1px; }
+.dice-score-label { font-size: 12px; color: var(--text2); text-align: center; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; }
+.dice-info { font-size: 13px; color: var(--accent2); text-align: center; margin: 6px 0; min-height: 20px; }
+.dice-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+
 /* WINNER */
-.winner-header { text-align: center; padding: 2rem 0 1.5rem; position: relative; }
+.winner-header { text-align: center; padding: 2rem 0 1.5rem; }
 .trophy { font-size: 56px; margin-bottom: 12px; }
 .winner-name { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--accent); }
 .winner-pts { color: var(--text2); margin-top: 4px; font-size: 15px; }
@@ -124,36 +145,34 @@ input.error { border-color: var(--danger); }
 .podium-name { flex: 1; font-size: 15px; }
 .podium-pts { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
 .podium-pts.negative { color: var(--danger); }
-
-/* CANVAS CONFETTI */
-#confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
-
-/* CHART */
 #chart-section { display: none; margin-top: 12px; }
 #chart-section.show { display: block; }
-#game-chart { width: 100%; border-radius: var(--radius-sm); }
 .chart-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
 .legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text2); }
 .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
 
+/* CANVAS */
+#confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+
 /* MODALS */
 .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); align-items: center; justify-content: center; z-index: 999; padding: 1rem; }
 .modal-overlay.show { display: flex; }
-.modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.5rem; max-width: 340px; width: 100%; }
+.modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--radius); padding: 1.5rem; max-width: 340px; width: 100%; max-height: 85vh; overflow-y: auto; }
 .modal h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 12px; }
 .modal p { color: var(--text2); font-size: 14px; margin-bottom: 1rem; line-height: 1.6; }
-.modal-close { width: 100%; margin-top: 4px; }
 .modal-btns { display: flex; flex-direction: column; gap: 8px; margin-top: 1rem; }
-.rules-section { margin-bottom: 10px; }
+.rules-section { margin-bottom: 12px; }
 .rules-section strong { color: var(--accent); font-size: 13px; display: block; margin-bottom: 4px; }
-.rules-section p { margin-bottom: 0; }
+.rules-section p { margin-bottom: 0; color: var(--text2); font-size: 14px; line-height: 1.6; }
 
-@media (max-width: 380px) { .current-name { font-size: 26px; } }
+/* MACKE MODAL */
+.macke-modal-icon { font-size: 48px; text-align: center; margin-bottom: 12px; }
+
+@media (max-width: 380px) { .current-name { font-size: 26px; } .die { width: 50px; height: 58px; } }
 @media (min-width: 600px) { .screen-inner { padding: 2rem 1.5rem 4rem; } .current-name { font-size: 36px; } }
 </style>
 </head>
 <body>
-
 <canvas id="confetti-canvas"></canvas>
 
 <!-- SEITE 1: INTRO -->
@@ -193,6 +212,12 @@ input.error { border-color: var(--danger); }
       <span class="label">Namen & Reihenfolge</span>
       <div id="player-list"></div>
       <div class="divider"></div>
+      <span class="label">Würfelmodus</span>
+      <div class="dice-mode-row">
+        <div class="dice-mode-btn selected" id="dm-real" onclick="setDiceMode('real')">🎲 Echte Würfel</div>
+        <div class="dice-mode-btn" id="dm-digital" onclick="setDiceMode('digital')">📱 Digitale Würfel</div>
+      </div>
+      <div class="divider"></div>
       <button class="btn btn-primary btn-full" onclick="startGame()">Spiel starten</button>
       <button class="btn-rules" onclick="openRules()">📖 Regeln erklären</button>
     </div>
@@ -210,15 +235,15 @@ input.error { border-color: var(--danger); }
     </div>
     <div class="warning-bar" id="warn-bar">⚠️ Achtung – bereits 2x keine Punkte!</div>
     <div class="card" id="scoreboard"></div>
-    <div class="card">
-      <span class="label" id="input-label">Punkte dieser Runde</span>
 
+    <!-- ECHTE WÜRFEL EINGABE -->
+    <div class="card" id="real-dice-input">
+      <span class="label" id="input-label">Punkte dieser Runde</span>
       <div id="mode-text">
         <input type="number" id="pts-input" placeholder="z.B. 250" inputmode="numeric"
           onkeydown="if(event.key==='Enter') confirmPoints()" style="margin-bottom:8px;" oninput="clearError()" />
         <div class="input-error" id="pts-error">Nur Vielfache von 50 sind gültig (z.B. 50, 100, 150)</div>
       </div>
-
       <div id="mode-buttons" style="display:none;">
         <div class="pts-display" id="pts-display">0</div>
         <div class="pts-btn-grid">
@@ -230,7 +255,6 @@ input.error { border-color: var(--danger); }
           <button class="pts-btn pts-btn-reset" onclick="resetPts()">Reset</button>
         </div>
       </div>
-
       <div class="action-row" style="margin-top:10px;">
         <button class="btn btn-ghost" onclick="undoLast()">← Zurück</button>
         <button class="btn btn-danger" onclick="noPoints()">Keine Punkte</button>
@@ -238,6 +262,21 @@ input.error { border-color: var(--danger); }
       <button class="btn btn-primary btn-full" onclick="confirmPoints()">Bestätigen</button>
       <button class="btn btn-abort" onclick="askAbort()">Spiel abbrechen</button>
       <button class="btn-mode-toggle" onclick="openModeSelect()">Eingabemodus ändern</button>
+    </div>
+
+    <!-- DIGITALE WÜRFEL -->
+    <div class="card dice-area" id="digital-dice-input" style="display:none;">
+      <div class="dice-inherited-banner" id="inherited-banner"></div>
+      <div class="dice-score-preview" id="dice-score-preview">0</div>
+      <div class="dice-score-label">Punkte dieser Runde</div>
+      <div class="dice-info" id="dice-info"></div>
+      <div class="dice-grid" id="dice-grid"></div>
+      <div id="dice-tap-hint" style="display:none; font-size:12px; color:var(--text2); text-align:center; margin-top:4px; letter-spacing:0.3px;">Würfel antippen um sie zu behalten</div>
+      <div class="dice-btn-row">
+        <button class="btn btn-primary" id="roll-btn" onclick="rollDice()">🎲 Würfeln</button>
+        <button class="btn" id="end-turn-btn" onclick="endDiceTurn()" style="display:none;">Zug beenden</button>
+      </div>
+      <button class="btn btn-abort" style="margin-top:8px;" onclick="askAbort()">Spiel abbrechen</button>
     </div>
   </div>
 </div>
@@ -266,39 +305,47 @@ input.error { border-color: var(--danger); }
 <div class="modal-overlay" id="rules-modal">
   <div class="modal">
     <h2>Regeln</h2>
-    <div class="rules-section">
-      <strong>Ziel</strong>
-      <p>Als erster 10.000 Punkte erreichen.</p>
+    <div class="rules-section"><strong>Ziel</strong><p>Als erster 10.000 Punkte erreichen.</p></div>
+    <div class="rules-section"><strong>Punkte</strong><p>Eine 1 = 100 Punkte · Eine 5 = 50 Punkte · Drei Fünfen = 500 Punkte · Straße (1–5 oder 2–6) = 1.000 Punkte</p></div>
+    <div class="rules-section"><strong>Ablauf</strong><p>Jeder würfelt reihum mit allen 5 Würfeln. Man muss mindestens einen Würfel rauslegen (1er, 5er oder gültige Kombination) und kann dann aufhören oder weiterwürfeln.</p></div>
+    <div class="rules-section"><strong>Keine Punkte (Macke)</strong><p>Wenn nach einem Wurf kein einziger Würfel rausgelegt werden kann, ist das eine Macke – alle Punkte dieser Runde sind verloren.</p></div>
+    <div class="rules-section"><strong>Alle Würfel sind Punkte</strong><p>Wenn alle 5 Würfel Punkte bringen, darf man nochmal mit allen 5 neu würfeln – die gesammelten Punkte bleiben.</p></div>
+    <div class="rules-section"><strong>Weiterwürfeln</strong><p>Hat der Vorspieler seinen Zug beendet, kann der nächste Spieler dessen offene Würfel übernehmen und die Punkte mitnehmen. Macht er eine Macke, verliert er alles.</p></div>
+    <div class="rules-section"><strong>Strafe</strong><p>Wer 3 Runden in Folge keine Punkte macht, verliert 500 Punkte.</p></div>
+    <div class="rules-section"><strong>Sieg</strong><p>Wer zuerst 10.000 Punkte erreicht, gewinnt sofort.</p></div>
+    <button class="btn btn-full" style="margin-top:4px;" onclick="closeRules()">Schließen</button>
+  </div>
+</div>
+
+<!-- MODAL: MACKE -->
+<div class="modal-overlay" id="macke-modal">
+  <div class="modal" style="text-align:center;">
+    <div class="macke-modal-icon">💀</div>
+    <h2>Macke!</h2>
+    <p id="macke-text">Kein Würfel bringt Punkte. Alle Punkte dieser Runde sind verloren.</p>
+    <button class="btn btn-full btn-danger" onclick="closeMackeModal()">Weiter</button>
+  </div>
+</div>
+
+<!-- MODAL: ALLE WÜRFEL PUNKTEN -->
+<div class="modal-overlay" id="allscored-modal">
+  <div class="modal" style="text-align:center;">
+    <div class="macke-modal-icon">🔥</div>
+    <h2>Alle Würfel!</h2>
+    <p>Alle 5 Würfel bringen Punkte – du darfst nochmal mit allen 5 würfeln!</p>
+    <button class="btn btn-primary btn-full" onclick="closeAllScoredModal()">Nochmal würfeln!</button>
+  </div>
+</div>
+
+<!-- MODAL: WEITERWÜRFELN -->
+<div class="modal-overlay" id="inherit-modal">
+  <div class="modal" style="text-align:center;">
+    <h2>Würfel übernehmen?</h2>
+    <p id="inherit-text"></p>
+    <div class="modal-btns">
+      <button class="btn btn-primary btn-full" onclick="inheritDice(true)">Ja, übernehmen</button>
+      <button class="btn btn-full" onclick="inheritDice(false)">Nein, neu starten</button>
     </div>
-    <div class="rules-section">
-      <strong>Punkte</strong>
-      <p>Eine 1 = 100 Punkte · Eine 5 = 50 Punkte · Drei Fünfen = 500 Punkte · Straße (1–6) = 1.000 Punkte</p>
-    </div>
-    <div class="rules-section">
-      <strong>Ablauf</strong>
-      <p>Jeder würfelt reihum mit allen 5 Würfeln. Man muss mindestens einen Würfel rauslegen (1er, 5er oder eine gültige Kombination) und kann dann entscheiden: aufhören und Punkte sichern, oder weiterwürfeln.</p>
-    </div>
-    <div class="rules-section">
-      <strong>Keine Punkte (Macke)</strong>
-      <p>Wenn nach einem Wurf kein einziger Würfel rausgelegt werden kann, ist das eine Macke – alle Punkte dieser Runde sind verloren.</p>
-    </div>
-    <div class="rules-section">
-      <strong>Alle Würfel sind Punkte</strong>
-      <p>Wenn alle 5 Würfel rausgelegt werden können, darf man nochmal mit allen 5 Würfeln neu würfeln – die gesammelten Punkte bleiben erhalten.</p>
-    </div>
-    <div class="rules-section">
-      <strong>Weiterwürfeln</strong>
-      <p>Hat der Vorspieler noch offene Würfel übrig, kann der nächste Spieler diese Würfel übernehmen und die Punkte des Vorspielers mitnehmen. Macht er eine Macke, verliert er alles.</p>
-    </div>
-    <div class="rules-section">
-      <strong>Strafe</strong>
-      <p>Wer 3 Runden in Folge keine Punkte macht, verliert 500 Punkte. Die roten Punkte zeigen wie viele Nullrunden ein Spieler schon hat.</p>
-    </div>
-    <div class="rules-section">
-      <strong>Sieg</strong>
-      <p>Wer zuerst 10.000 Punkte erreicht, gewinnt sofort.</p>
-    </div>
-    <button class="btn btn-full modal-close" onclick="closeRules()">Schließen</button>
   </div>
 </div>
 
@@ -327,24 +374,50 @@ input.error { border-color: var(--danger); }
 </div>
 
 <script>
-let players = [], cur = 0, hist = [], gameActive = false;
-let roundLog = [];
+// ── STATE ──
+let players = [], cur = 0, hist = [], gameActive = false, roundLog = [];
+let inputMode = localStorage.getItem('10k_input_mode') || 'text';
+let btnPts = 0;
+let diceMode = 'real';
+
+// Digital dice state
+let dice = [1,1,1,1,1];
+let held = [false,false,false,false,false];
+let diceRoundPts = 0;
+let hasRolled = false;
+let inheritedPts = 0;
+let inheritedDiceCount = 0;
+let prevOpenDice = 0;
+
 const SAVE_KEY = '10k_save';
 const CHART_COLORS = ['#e8d5a3','#7eb8e8','#7ee8a3','#e87e7e','#c47ee8','#e8b87e','#7ee8e8','#e87eb8'];
+const DIE_FACES = ['', '', '', '', '', '', ''];
+const DOT_POSITIONS = {
+  1: [[50,50]],
+  2: [[25,25],[75,75]],
+  3: [[25,25],[50,50],[75,75]],
+  4: [[25,25],[75,25],[25,75],[75,75]],
+  5: [[25,25],[75,25],[50,50],[25,75],[75,75]],
+  6: [[25,25],[75,25],[25,50],[75,50],[25,75],[75,75]]
+};
+function dieSVG(v) {
+  const dots = (DOT_POSITIONS[v] || []).map(([x,y]) =>
+    `<circle cx="${x}" cy="${y}" r="9" fill="currentColor"/>`).join('');
+  return `<svg viewBox="0 0 100 100" width="44" height="44">${dots}</svg>`;
+}
 
-window.addEventListener('beforeunload', e => {
-  if (gameActive) { e.preventDefault(); e.returnValue = ''; }
-});
+window.addEventListener('beforeunload', e => { if (gameActive) { e.preventDefault(); e.returnValue = ''; } });
 
+// ── SCREENS ──
 function show(id) {
   document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); s.scrollTop = 0; });
   const el = document.getElementById('screen-' + id);
-  el.classList.add('active');
-  el.scrollTop = 0;
+  el.classList.add('active'); el.scrollTop = 0;
 }
 
+// ── STORAGE ──
 function saveState() {
-  try { localStorage.setItem(SAVE_KEY, JSON.stringify({ players, cur, hist, roundLog })); } catch(e) {}
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify({ players, cur, hist, roundLog, diceMode, diceRoundPts, hasRolled, dice, held, prevOpenDice })); } catch(e) {}
 }
 function loadState() {
   try {
@@ -353,11 +426,18 @@ function loadState() {
     const s = JSON.parse(raw);
     if (!s.players || !s.players.length) return false;
     players = s.players; cur = s.cur; hist = s.hist || []; roundLog = s.roundLog || [];
+    diceMode = s.diceMode || 'real';
+    diceRoundPts = s.diceRoundPts || 0;
+    hasRolled = s.hasRolled || false;
+    dice = s.dice || [1,1,1,1,1];
+    held = s.held || [false,false,false,false,false];
+    prevOpenDice = s.prevOpenDice || 0;
     return true;
   } catch(e) { return false; }
 }
 function clearState() { try { localStorage.removeItem(SAVE_KEY); } catch(e) {} }
 
+// ── INIT ──
 window.addEventListener('DOMContentLoaded', () => {
   if (loadState()) { gameActive = true; renderGame(); show('game'); return; }
   runIntro();
@@ -372,12 +452,7 @@ function runIntro() {
     n += Math.ceil((10 - n) / 3) || 1;
     if (n >= 10) {
       el.textContent = '10';
-      setTimeout(() => {
-        el.textContent = '10k';
-        sub.style.opacity = '1';
-        btn.style.opacity = '1';
-        btn.style.pointerEvents = 'auto';
-      }, 300);
+      setTimeout(() => { el.textContent = '10k'; sub.style.opacity = '1'; btn.style.opacity = '1'; btn.style.pointerEvents = 'auto'; }, 300);
       return;
     }
     el.textContent = n;
@@ -386,55 +461,39 @@ function runIntro() {
   setTimeout(step, 600);
 }
 
+// ── SETUP ──
 function setCount(n) {
+  document.querySelectorAll('.count-btn').forEach(b => b.classList.remove('selected'));
+  event.target.classList.add('selected');
   const list = document.getElementById('player-list');
   list.innerHTML = '';
   for (let i = 0; i < n; i++) {
-    list.innerHTML += `<div class="player-row">
-      <input type="text" placeholder="Spieler ${i+1}" id="pn-${i}" />
-      <div class="order-btns">
-        <button class="order-btn" onclick="moveUp(${i})">▲</button>
-        <button class="order-btn" onclick="moveDown(${i})">▼</button>
-      </div>
-    </div>`;
+    list.innerHTML += `<div class="player-row"><input type="text" placeholder="Spieler ${i+1}" id="pn-${i}" /><div class="order-btns"><button class="order-btn" onclick="moveUp(${i})">▲</button><button class="order-btn" onclick="moveDown(${i})">▼</button></div></div>`;
   }
   show('names');
 }
 
-function moveUp(i) {
-  const all = document.querySelectorAll('[id^="pn-"]');
-  if (i === 0) return;
-  [all[i].value, all[i-1].value] = [all[i-1].value, all[i].value];
-}
-function moveDown(i) {
-  const all = document.querySelectorAll('[id^="pn-"]');
-  if (i >= all.length - 1) return;
-  [all[i].value, all[i+1].value] = [all[i+1].value, all[i].value];
+function moveUp(i) { const a = document.querySelectorAll('[id^="pn-"]'); if(i===0) return; [a[i].value,a[i-1].value]=[a[i-1].value,a[i].value]; }
+function moveDown(i) { const a = document.querySelectorAll('[id^="pn-"]'); if(i>=a.length-1) return; [a[i].value,a[i+1].value]=[a[i+1].value,a[i].value]; }
+
+function setDiceMode(mode) {
+  diceMode = mode;
+  document.getElementById('dm-real').classList.toggle('selected', mode === 'real');
+  document.getElementById('dm-digital').classList.toggle('selected', mode === 'digital');
 }
 
 function startGame() {
   const inputs = document.querySelectorAll('[id^="pn-"]');
   if (!inputs.length) return;
-  players = Array.from(inputs).map((inp, i) => ({
-    name: inp.value.trim() || 'Spieler ' + (i+1),
-    score: 0, streak: 0
-  }));
+  players = Array.from(inputs).map((inp, i) => ({ name: inp.value.trim() || 'Spieler '+(i+1), score: 0, streak: 0 }));
   cur = 0; hist = []; gameActive = true;
   roundLog = [players.map(p => ({ name: p.name, score: 0 }))];
-  saveState();
-  renderGame();
-  show('game');
+  prevOpenDice = 0; diceRoundPts = 0; hasRolled = false;
+  held = [false,false,false,false,false];
+  saveState(); renderGame(); show('game');
 }
 
-function saveHist() {
-  hist.push({ players: JSON.parse(JSON.stringify(players)), cur, roundLog: JSON.parse(JSON.stringify(roundLog)) });
-  if (hist.length > 60) hist.shift();
-}
-
-function logRound() {
-  roundLog.push(players.map(p => ({ name: p.name, score: p.score })));
-}
-
+// ── GAME RENDER ──
 function renderGame() {
   const p = players[cur];
   document.getElementById('cur-name').textContent = p.name;
@@ -443,60 +502,55 @@ function renderGame() {
   document.getElementById('cur-progress').style.width = pct + '%';
   const wb = document.getElementById('warn-bar');
   p.streak === 2 ? wb.classList.add('show') : wb.classList.remove('show');
+
   document.getElementById('scoreboard').innerHTML = players.map((pl, i) => {
     const dots = [0,1,2].map(d => `<span class="dot ${d < pl.streak ? 'on' : ''}"></span>`).join('');
-    return `<div class="score-row ${i===cur?'active':''}">
-      <span class="s-name">${pl.name}</span>
-      <div class="s-right">
-        <div class="dots">${dots}</div>
-        <span class="s-pts ${pl.score<0?'negative':''}">${pl.score.toLocaleString('de-DE')}</span>
-      </div>
-    </div>`;
+    return `<div class="score-row ${i===cur?'active':''}"><span class="s-name">${pl.name}</span><div class="s-right"><div class="dots">${dots}</div><span class="s-pts ${pl.score<0?'negative':''}">${pl.score.toLocaleString('de-DE')}</span></div></div>`;
   }).join('');
-  applyMode();
-  if (inputMode === 'text') { document.getElementById('pts-input').value = ''; setTimeout(() => document.getElementById('pts-input').focus(), 50); }
+
+  const isDigital = diceMode === 'digital';
+  document.getElementById('real-dice-input').style.display = isDigital ? 'none' : 'block';
+  document.getElementById('digital-dice-input').style.display = isDigital ? 'block' : 'none';
+
+  if (!isDigital) {
+    applyMode();
+    if (inputMode === 'text') { document.getElementById('pts-input').value = ''; setTimeout(() => document.getElementById('pts-input').focus(), 50); }
+  } else {
+    renderDice();
+    // Show inherited banner if prev player left open dice
+    const banner = document.getElementById('inherited-banner');
+    if (prevOpenDice > 0 && !hasRolled) {
+      banner.textContent = `⬆ ${players[(cur - 1 + players.length) % players.length].name} hat ${prevOpenDice} Würfel offen gelassen`;
+      banner.classList.add('show');
+    } else {
+      banner.classList.remove('show');
+    }
+  }
 }
 
-let inputMode = localStorage.getItem("10k_input_mode") || "text";
-let btnPts = 0;
-
-function openModeSelect() {
-  document.getElementById('mode-modal').classList.add('show');
-}
-function closeModeModal() {
-  document.getElementById('mode-modal').classList.remove('show');
-}
-function setMode(mode) {
-  inputMode = mode;
-  localStorage.setItem("10k_input_mode", mode);
-  applyMode();
-  closeModeModal();
-}
+// ── REAL DICE INPUT ──
+let inputModeLocal = localStorage.getItem('10k_input_mode') || 'text';
 function applyMode() {
+  inputModeLocal = inputMode;
   const isBtn = inputMode === 'buttons';
   document.getElementById('mode-text').style.display = isBtn ? 'none' : 'block';
   document.getElementById('mode-buttons').style.display = isBtn ? 'block' : 'none';
   btnPts = 0;
   if (isBtn) document.getElementById('pts-display').textContent = '0';
 }
-function addPts(v) {
-  btnPts += v;
-  document.getElementById('pts-display').textContent = btnPts.toLocaleString('de-DE');
-}
-function resetPts() {
-  btnPts = 0;
-  document.getElementById('pts-display').textContent = '0';
-}
+function addPts(v) { btnPts += v; document.getElementById('pts-display').textContent = btnPts.toLocaleString('de-DE'); }
+function resetPts() { btnPts = 0; document.getElementById('pts-display').textContent = '0'; }
+function openModeSelect() { document.getElementById('mode-modal').classList.add('show'); }
+function closeModeModal() { document.getElementById('mode-modal').classList.remove('show'); }
+function setMode(mode) { inputMode = mode; localStorage.setItem('10k_input_mode', mode); applyMode(); closeModeModal(); }
+function clearError() { document.getElementById('pts-error').classList.remove('show'); document.getElementById('pts-input').classList.remove('error'); }
+function showError() { document.getElementById('pts-error').classList.add('show'); document.getElementById('pts-input').classList.add('error'); }
 
-function clearError() {
-  document.getElementById('pts-error').classList.remove('show');
-  document.getElementById('pts-input').classList.remove('error');
+function saveHist() {
+  hist.push({ players: JSON.parse(JSON.stringify(players)), cur, roundLog: JSON.parse(JSON.stringify(roundLog)), diceRoundPts, hasRolled, dice: [...dice], held: [...held], prevOpenDice });
+  if (hist.length > 60) hist.shift();
 }
-
-function showError() {
-  document.getElementById('pts-error').classList.add('show');
-  document.getElementById('pts-input').classList.add('error');
-}
+function logRound() { roundLog.push(players.map(p => ({ name: p.name, score: p.score }))); }
 
 function confirmPoints() {
   let val;
@@ -518,69 +572,274 @@ function confirmPoints() {
   logRound();
   if (players[cur].score >= 10000) { showWinner(); return; }
   cur = (cur + 1) % players.length;
-  saveState();
-  renderGame();
+  saveState(); renderGame();
 }
 
 function noPoints() {
   saveHist();
   players[cur].streak++;
-  if (players[cur].streak >= 3) {
-    players[cur].score -= 500;
-    players[cur].streak = 0;
-  }
+  if (players[cur].streak >= 3) { players[cur].score -= 500; players[cur].streak = 0; }
   logRound();
   cur = (cur + 1) % players.length;
-  saveState();
-  renderGame();
+  prevOpenDice = 0;
+  saveState(); renderGame();
 }
 
 function undoLast() {
   if (!hist.length) return;
   const prev = hist.pop();
-  players = prev.players;
-  cur = prev.cur;
-  roundLog = prev.roundLog;
-  saveState();
-  renderGame();
+  players = prev.players; cur = prev.cur; roundLog = prev.roundLog;
+  diceRoundPts = prev.diceRoundPts; hasRolled = prev.hasRolled;
+  dice = prev.dice; held = prev.held; prevOpenDice = prev.prevOpenDice;
+  saveState(); renderGame();
 }
 
+// ── DIGITAL DICE ──
+function renderDice() {
+  const grid = document.getElementById('dice-grid');
+  grid.innerHTML = dice.map((v, i) => `
+    <div class="die ${held[i] ? 'held' : ''}" id="die-${i}" onclick="toggleHold(${i})">
+      ${hasRolled ? dieSVG(v) : '<span style="font-size:24px;opacity:0.4;">?</span>'}
+      ${held[i] ? '<span class="held-label">GEHALTEN</span>' : ''}
+    </div>`).join('');
+  const hint = document.getElementById('dice-tap-hint');
+  if (hint) hint.style.display = hasRolled ? 'block' : 'none';
+  document.getElementById('dice-score-preview').textContent = diceRoundPts.toLocaleString('de-DE');
+
+  const rollBtn = document.getElementById('roll-btn');
+  const endBtn = document.getElementById('end-turn-btn');
+  const heldCount = held.filter(Boolean).length;
+  endBtn.style.display = hasRolled ? 'flex' : 'none';
+  rollBtn.textContent = hasRolled ? (heldCount === 5 ? '🎲 Alle neu würfeln' : '🎲 Weiter würfeln') : '🎲 Würfeln';
+  if (!hasRolled && prevOpenDice > 0) {
+    rollBtn.textContent = '🎲 Übernehmen & Würfeln';
+  }
+}
+
+function toggleHold(i) {
+  if (!hasRolled) return;
+  held[i] = !held[i];
+  renderDice();
+}
+
+function rollDice() {
+  // If inheriting from prev player
+  if (!hasRolled && prevOpenDice > 0 && inheritedPts === 0) {
+    showInheritModal();
+    return;
+  }
+
+  const heldCount = held.filter(Boolean).length;
+  const rollCount = heldCount === 5 ? 5 : (5 - heldCount);
+
+  // Animate
+  const grid = document.getElementById('dice-grid');
+  dice.forEach((v, i) => {
+    if (!held[i] || heldCount === 5) {
+      const el = document.getElementById('die-' + i);
+      if (el) el.classList.add('rolling');
+    }
+  });
+
+  setTimeout(() => {
+    if (heldCount === 5) {
+      // All scored – reroll all
+      held = [false,false,false,false,false];
+      for (let i = 0; i < 5; i++) dice[i] = Math.ceil(Math.random() * 6);
+    } else {
+      for (let i = 0; i < 5; i++) {
+        if (!held[i]) dice[i] = Math.ceil(Math.random() * 6);
+      }
+    }
+    hasRolled = true;
+    document.querySelectorAll('.die').forEach(el => el.classList.remove('rolling'));
+
+    // Check macke
+    if (isMacke()) {
+      diceRoundPts = 0;
+      hasRolled = false;
+      held = [false,false,false,false,false];
+      inheritedPts = 0;
+      showMackeModal();
+      return;
+    }
+    renderDice();
+    saveState();
+  }, 520);
+}
+
+function isMacke() {
+  const vals = dice.filter((v, i) => !held[i]);
+  if (vals.length === 0) return false;
+  // Check if any single die scores or if combo scores
+  const counts = [0,0,0,0,0,0,0];
+  vals.forEach(v => counts[v]++);
+  if (counts[1] > 0 || counts[5] > 0) return false;
+  if (counts[1] >= 3 || counts[2] >= 3 || counts[3] >= 3 || counts[4] >= 3 || counts[5] >= 3 || counts[6] >= 3) return false;
+  // Check straight among ALL dice (including held)
+  const allVals = [...dice];
+  const sorted = [...new Set(allVals)].sort((a,b)=>a-b);
+  if (JSON.stringify(sorted) === JSON.stringify([1,2,3,4,5]) || JSON.stringify(sorted) === JSON.stringify([2,3,4,5,6])) return false;
+  return true;
+}
+
+function calcScore() {
+  // Calculate score of held dice
+  const heldVals = dice.filter((v,i) => held[i]);
+  return calcDiceScore(heldVals, dice);
+}
+
+function calcDiceScore(heldVals, allDice) {
+  const allSorted = [...allDice].sort((a,b)=>a-b);
+  // Straight check (all 5 dice)
+  if (JSON.stringify(allSorted) === JSON.stringify([1,2,3,4,5]) || JSON.stringify(allSorted) === JSON.stringify([2,3,4,5,6])) return 1000;
+
+  let pts = 0;
+  const counts = [0,0,0,0,0,0,0];
+  heldVals.forEach(v => counts[v]++);
+  // Three fives special
+  if (counts[5] >= 3) { pts += 500; counts[5] -= 3; }
+  // Three of a kind
+  for (let v = 1; v <= 6; v++) {
+    if (v === 5) continue;
+    if (counts[v] >= 3) { pts += v * 100; counts[v] -= 3; }
+  }
+  // Singles
+  pts += counts[1] * 100;
+  pts += counts[5] * 50;
+  return pts;
+}
+
+function endDiceTurn() {
+  const heldCount = held.filter(Boolean).length;
+  const score = calcScore();
+  const total = diceRoundPts + inheritedPts + score;
+  const openDice = 5 - heldCount;
+
+  // Check all 5 scored
+  if (heldCount === 5) {
+    saveHist();
+    players[cur].score += total;
+    players[cur].streak = 0;
+    logRound();
+    prevOpenDice = 5; // next player can use all 5 with these pts
+    inheritedPts = total;
+    diceRoundPts = 0; hasRolled = false; held = [false,false,false,false,false];
+    if (players[cur].score >= 10000) { showWinner(); return; }
+    cur = (cur + 1) % players.length;
+    // Show inherit modal for next
+    if (diceMode === 'digital') {
+      saveState(); renderGame();
+      setTimeout(() => { if (prevOpenDice > 0) showInheritModal(); }, 300);
+    }
+    return;
+  }
+
+  saveHist();
+  players[cur].score += total;
+  players[cur].streak = 0;
+  logRound();
+  const nextPrevOpen = openDice;
+  const nextInheritPts = total;
+  diceRoundPts = 0; hasRolled = false; held = [false,false,false,false,false]; inheritedPts = 0;
+  prevOpenDice = nextPrevOpen;
+  if (players[cur].score >= 10000) { showWinner(); return; }
+  cur = (cur + 1) % players.length;
+  saveState(); renderGame();
+  if (nextPrevOpen > 0 && diceMode === 'digital') {
+    inheritedPts = nextInheritPts;
+    setTimeout(() => showInheritModal(), 300);
+  }
+}
+
+function showInheritModal() {
+  const prevPlayer = players[(cur - 1 + players.length) % players.length];
+  const pts = inheritedPts || 0;
+  document.getElementById('inherit-text').textContent =
+    `${prevPlayer.name} hat ${prevOpenDice} Würfel offen gelassen und ${pts.toLocaleString('de-DE')} Punkte. Möchtest du weiterwürfeln und diese Punkte mitnehmen?`;
+  document.getElementById('inherit-modal').classList.add('show');
+}
+
+function inheritDice(yes) {
+  document.getElementById('inherit-modal').classList.remove('show');
+  if (yes) {
+    diceRoundPts = inheritedPts;
+    held = [false,false,false,false,false];
+    document.getElementById('inherited-banner').textContent =
+      `⬆ ${players[(cur-1+players.length)%players.length].name}'s Punkte übernommen: ${diceRoundPts.toLocaleString('de-DE')}`;
+    document.getElementById('inherited-banner').classList.add('show');
+    hasRolled = false;
+    renderDice();
+    // Auto-roll with open dice count
+    setTimeout(() => {
+      for (let i = 0; i < 5; i++) dice[i] = Math.ceil(Math.random() * 6);
+      hasRolled = true;
+      if (isMacke()) {
+        diceRoundPts = 0; hasRolled = false; held = [false,false,false,false,false]; inheritedPts = 0;
+        showMackeModal(); return;
+      }
+      renderDice(); saveState();
+    }, 300);
+  } else {
+    diceRoundPts = 0; inheritedPts = 0; prevOpenDice = 0;
+    held = [false,false,false,false,false];
+    hasRolled = false;
+    renderDice();
+  }
+}
+
+function showMackeModal() {
+  const streak = players[cur].streak + 1;
+  let text = 'Kein Würfel bringt Punkte. Alle Punkte dieser Runde sind verloren.';
+  document.getElementById('macke-text').textContent = text;
+  document.getElementById('macke-modal').classList.add('show');
+}
+
+function closeMackeModal() {
+  document.getElementById('macke-modal').classList.remove('show');
+  saveHist();
+  players[cur].streak++;
+  if (players[cur].streak >= 3) { players[cur].score -= 500; players[cur].streak = 0; }
+  logRound();
+  prevOpenDice = 0; inheritedPts = 0;
+  cur = (cur + 1) % players.length;
+  saveState(); renderGame();
+}
+
+function closeAllScoredModal() {
+  document.getElementById('allscored-modal').classList.remove('show');
+  held = [false,false,false,false,false];
+  renderDice();
+}
+
+// ── MODALS ──
 function openRules() { document.getElementById('rules-modal').classList.add('show'); }
 function closeRules() { document.getElementById('rules-modal').classList.remove('show'); }
 function askAbort() { document.getElementById('abort-modal').classList.add('show'); }
 function closeModal() { document.getElementById('abort-modal').classList.remove('show'); }
 function confirmAbort() { closeModal(); resetGame(); }
 
+// ── WINNER ──
 function showWinner() {
-  gameActive = false;
-  clearState();
+  gameActive = false; clearState();
   const w = players[cur];
   document.getElementById('win-name').textContent = w.name + ' gewinnt!';
   document.getElementById('win-pts').textContent = w.score.toLocaleString('de-DE') + ' Punkte';
   const sorted = [...players].sort((a,b) => b.score - a.score);
   const medals = ['🥇','🥈','🥉'];
   document.getElementById('final-board').innerHTML = sorted.map((pl, i) => `
-    <div class="podium-row">
-      <div class="podium-pos">${medals[i]||(i+1)+'.'}</div>
-      <div class="podium-name">${pl.name}</div>
-      <div class="podium-pts ${pl.score<0?'negative':''}">${pl.score.toLocaleString('de-DE')}</div>
-    </div>`).join('');
+    <div class="podium-row"><div class="podium-pos">${medals[i]||(i+1)+'.'}</div><div class="podium-name">${pl.name}</div><div class="podium-pts ${pl.score<0?'negative':''}">${pl.score.toLocaleString('de-DE')}</div></div>`).join('');
   document.getElementById('chart-section').classList.remove('show');
   show('winner');
   setTimeout(launchConfetti, 300);
 }
 
+// ── CHART ──
 function toggleChart() {
   const sec = document.getElementById('chart-section');
   const isShown = sec.classList.contains('show');
-  if (isShown) {
-    sec.classList.remove('show');
-    document.querySelector('.btn-chart').textContent = '📈 Spielverlauf anzeigen';
-  } else {
-    sec.classList.add('show');
-    document.querySelector('.btn-chart').textContent = '📈 Spielverlauf ausblenden';
-    drawChart();
-  }
+  if (isShown) { sec.classList.remove('show'); document.querySelector('.btn-chart').textContent = '📈 Spielverlauf anzeigen'; }
+  else { sec.classList.add('show'); document.querySelector('.btn-chart').textContent = '📈 Spielverlauf ausblenden'; drawChart(); }
 }
 
 function drawChart() {
@@ -589,122 +848,76 @@ function drawChart() {
   const dpr = window.devicePixelRatio || 1;
   const w = canvas.offsetWidth;
   const h = 220;
-  canvas.width = w * dpr;
-  canvas.height = h * dpr;
+  canvas.width = w * dpr; canvas.height = h * dpr;
   ctx.scale(dpr, dpr);
-
   const rounds = roundLog.length;
-  const names = players.map(p => p.name);
-  const allScores = roundLog.map(r => r.map(p => p.score));
-  const allVals = allScores.flat();
-  const minVal = Math.min(0, ...allVals);
-  const maxVal = Math.max(1000, ...allVals);
-  const pad = { top: 20, right: 20, bottom: 30, left: 50 };
+  const pad = { top: 20, right: 20, bottom: 30, left: 55 };
   const chartW = w - pad.left - pad.right;
   const chartH = h - pad.top - pad.bottom;
-
+  const minVal = 0; const maxVal = 10000;
   ctx.clearRect(0, 0, w, h);
 
-  // Grid
-  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
-  ctx.lineWidth = 1;
-  for (let i = 0; i <= 4; i++) {
-    const y = pad.top + (chartH / 4) * i;
+  // Fixed grid lines at 0, 2000, 4000, 6000, 8000, 10000
+  [0, 2000, 4000, 6000, 8000, 10000].forEach(val => {
+    const y = pad.top + chartH - ((val - minVal) / (maxVal - minVal)) * chartH;
+    ctx.strokeStyle = val === 10000 ? 'rgba(232,213,163,0.2)' : 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = val === 10000 ? 1.5 : 1;
+    ctx.setLineDash(val === 10000 ? [4,4] : []);
     ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(pad.left + chartW, y); ctx.stroke();
-    const val = Math.round(maxVal - ((maxVal - minVal) / 4) * i);
-    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(255,255,255,0.35)';
     ctx.font = '11px DM Sans, sans-serif';
     ctx.textAlign = 'right';
-    ctx.fillText(val.toLocaleString('de-DE'), pad.left - 6, y + 4);
-  }
-
-  // 10k line
-  const tenKY = pad.top + chartH - ((10000 - minVal) / (maxVal - minVal)) * chartH;
-  if (tenKY >= pad.top && tenKY <= pad.top + chartH) {
-    ctx.strokeStyle = 'rgba(232,213,163,0.25)';
-    ctx.setLineDash([4, 4]);
-    ctx.beginPath(); ctx.moveTo(pad.left, tenKY); ctx.lineTo(pad.left + chartW, tenKY); ctx.stroke();
-    ctx.setLineDash([]);
-  }
+    ctx.fillText(val === 10000 ? '10k' : (val/1000)+'k', pad.left - 6, y + 4);
+  });
 
   // Lines per player
-  names.forEach((name, pi) => {
+  players.forEach((pl, pi) => {
     const color = CHART_COLORS[pi % CHART_COLORS.length];
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = color; ctx.lineWidth = 2;
     ctx.beginPath();
     roundLog.forEach((round, ri) => {
       const x = pad.left + (ri / Math.max(rounds - 1, 1)) * chartW;
       const score = round[pi] ? round[pi].score : 0;
-      const y = pad.top + chartH - ((score - minVal) / (maxVal - minVal)) * chartH;
+      const y = pad.top + chartH - ((Math.max(minVal, Math.min(maxVal, score)) - minVal) / (maxVal - minVal)) * chartH;
       ri === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
     });
     ctx.stroke();
-
-    // Dots
     roundLog.forEach((round, ri) => {
       const x = pad.left + (ri / Math.max(rounds - 1, 1)) * chartW;
       const score = round[pi] ? round[pi].score : 0;
-      const y = pad.top + chartH - ((score - minVal) / (maxVal - minVal)) * chartH;
+      const y = pad.top + chartH - ((Math.max(minVal, Math.min(maxVal, score)) - minVal) / (maxVal - minVal)) * chartH;
       ctx.fillStyle = color;
-      ctx.beginPath();
-      ctx.arc(x, y, 3, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
     });
   });
 
-  // X axis labels
-  ctx.fillStyle = 'rgba(255,255,255,0.3)';
-  ctx.font = '11px DM Sans, sans-serif';
-  ctx.textAlign = 'center';
+  // X labels
+  ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.font = '11px DM Sans, sans-serif'; ctx.textAlign = 'center';
   const step = Math.max(1, Math.floor(rounds / 6));
   for (let i = 0; i < rounds; i += step) {
     const x = pad.left + (i / Math.max(rounds - 1, 1)) * chartW;
     ctx.fillText('R' + (i + 1), x, h - 8);
   }
 
-  // Legend
-  const legend = document.getElementById('chart-legend');
-  legend.innerHTML = names.map((name, i) =>
-    `<div class="legend-item"><div class="legend-dot" style="background:${CHART_COLORS[i % CHART_COLORS.length]}"></div>${name}</div>`
-  ).join('');
+  document.getElementById('chart-legend').innerHTML = players.map((p, i) =>
+    `<div class="legend-item"><div class="legend-dot" style="background:${CHART_COLORS[i%CHART_COLORS.length]}"></div>${p.name}</div>`).join('');
 }
 
-// CONFETTI
+// ── CONFETTI ──
 function launchConfetti() {
   const canvas = document.getElementById('confetti-canvas');
   const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
   const pieces = [];
   const colors = ['#e8d5a3','#c4a96b','#f0e6c0','#d4b87a','#fff8e7','#b8972f'];
   for (let i = 0; i < 120; i++) {
-    pieces.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height - canvas.height,
-      r: Math.random() * 4 + 2,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      vx: (Math.random() - 0.5) * 3,
-      vy: Math.random() * 3 + 2,
-      alpha: 1,
-      spin: (Math.random() - 0.5) * 0.2
-    });
+    pieces.push({ x: Math.random()*canvas.width, y: Math.random()*canvas.height-canvas.height, r: Math.random()*4+2, color: colors[Math.floor(Math.random()*colors.length)], vx: (Math.random()-0.5)*3, vy: Math.random()*3+2, alpha: 1 });
   }
   let frame = 0;
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    pieces.forEach(p => {
-      p.x += p.vx; p.y += p.vy; p.alpha -= 0.008;
-      ctx.save();
-      ctx.globalAlpha = Math.max(0, p.alpha);
-      ctx.fillStyle = p.color;
-      ctx.shadowColor = p.color;
-      ctx.shadowBlur = 6;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-    });
+    pieces.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.alpha-=0.008; ctx.save(); ctx.globalAlpha=Math.max(0,p.alpha); ctx.fillStyle=p.color; ctx.shadowColor=p.color; ctx.shadowBlur=6; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill(); ctx.restore(); });
     frame++;
     if (frame < 180) requestAnimationFrame(draw);
     else ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -712,10 +925,12 @@ function launchConfetti() {
   draw();
 }
 
+// ── RESET ──
 function resetGame() {
-  gameActive = false;
-  clearState();
+  gameActive = false; clearState();
   players = []; cur = 0; hist = []; roundLog = [];
+  diceRoundPts = 0; hasRolled = false; held = [false,false,false,false,false];
+  prevOpenDice = 0; inheritedPts = 0;
   show('count');
 }
 </script>
