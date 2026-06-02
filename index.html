@@ -79,6 +79,10 @@ input.error { border-color: var(--danger); }
 .avatar-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 12px 0; }
 .avatar-pick { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--border2); background: var(--bg3); font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
 .avatar-pick:hover, .avatar-pick.selected { border-color: var(--accent); background: rgba(232,213,163,0.1); }
+.avatar-pick.used { opacity: 0.25; cursor: not-allowed; }
+.avatar-pick.used:hover { border-color: var(--border2); background: var(--bg3); }
+.color-btn.used { opacity: 0.25; cursor: not-allowed; }
+.color-btn.used:hover { transform: none !important; }
 .color-grid { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0; }
 
 /* DICE MODE */
@@ -521,19 +525,63 @@ function setCount(n) {
   show('names');
 }
 
+function getUsedAvatars(excludeIdx) {
+  const used = [];
+  document.querySelectorAll('[id^="avbtn-"]').forEach((btn, i) => {
+    if (i !== excludeIdx) used.push(btn.dataset.avatar);
+  });
+  return used;
+}
+function getUsedColors(excludeIdx) {
+  const used = [];
+  document.querySelectorAll('[id^="avbtn-"]').forEach((btn, i) => {
+    if (i !== excludeIdx) used.push(btn.dataset.color);
+  });
+  return used;
+}
+
 function openAvatarModal(idx) {
   editingPlayerIdx = idx;
   const btn = document.getElementById('avbtn-' + idx);
   tempAvatar = btn.dataset.avatar;
   tempColor = btn.dataset.color;
-  const ag = document.getElementById('avatar-grid');
-  ag.innerHTML = AVATARS.map(a => `<div class="avatar-pick ${a===tempAvatar?'selected':''}" onclick="pickAvatar('${a}')">${a}</div>`).join('');
-  const cg = document.getElementById('color-grid');
-  cg.innerHTML = PLAYER_COLORS.map(c => `<div class="color-btn ${c===tempColor?'selected':''}" style="background:${c};" onclick="pickColor('${c}')"></div>`).join('');
+  renderAvatarModal();
   document.getElementById('avatar-modal').classList.add('show');
 }
-function pickAvatar(a) { tempAvatar = a; document.querySelectorAll('.avatar-pick').forEach(el => el.classList.toggle('selected', el.textContent===a)); }
-function pickColor(c) { tempColor = c; document.querySelectorAll('.color-btn').forEach(el => el.classList.toggle('selected', el.style.background===c || el.style.backgroundColor===c)); }
+
+function renderAvatarModal() {
+  const usedAvatars = getUsedAvatars(editingPlayerIdx);
+  const usedColors = getUsedColors(editingPlayerIdx);
+  const ag = document.getElementById('avatar-grid');
+  ag.innerHTML = AVATARS.map(a => {
+    const used = usedAvatars.includes(a);
+    const sel = a === tempAvatar ? 'selected' : '';
+    const cls = used ? 'used' : '';
+    const click = used ? '' : 'pickAvatar(this.textContent.trim())';
+    return '<div class="avatar-pick ' + sel + ' ' + cls + '" onclick="' + click + '">' + a + '</div>';
+  }).join('');
+  const cg = document.getElementById('color-grid');
+  cg.innerHTML = PLAYER_COLORS.map(c => {
+    const used = usedColors.includes(c);
+    const sel = c === tempColor ? 'selected' : '';
+    const cls = used ? 'used' : '';
+    const click = used ? '' : 'pickColor(\'' + c + '\')';
+    return '<div class="color-btn ' + sel + ' ' + cls + '" style="background:' + c + ';" onclick="' + click + '"></div>';
+  }).join('');
+}
+
+function pickAvatar(a) {
+  const usedAvatars = getUsedAvatars(editingPlayerIdx);
+  if (!a || usedAvatars.includes(a)) return;
+  tempAvatar = a;
+  renderAvatarModal();
+}
+function pickColor(c) {
+  const usedColors = getUsedColors(editingPlayerIdx);
+  if (usedColors.includes(c)) return;
+  tempColor = c;
+  renderAvatarModal();
+}
 function closeAvatarModal() {
   if (editingPlayerIdx < 0) return;
   const btn = document.getElementById('avbtn-' + editingPlayerIdx);
@@ -662,6 +710,7 @@ function confirmPoints() {
 }
 
 function noPoints() {
+  playSound('macke');
   saveHist(); players[cur].streak++;
   if(players[cur].streak>=3){players[cur].score-=500;players[cur].streak=0;}
   logRound(); cur=(cur+1)%players.length; prevOpenDice=0; saveState(); renderGame();
