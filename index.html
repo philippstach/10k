@@ -669,17 +669,31 @@ function rollDice() {
 }
 
 function isMacke() {
-  const vals = dice.filter((v, i) => !held[i]);
-  if (vals.length === 0) return false;
-  // Check if any single die scores or if combo scores
+  // Only check the freshly rolled (non-held) dice
+  const freshDice = dice.filter((v, i) => !held[i]);
+  if (freshDice.length === 0) return false;
+
+  // Check straight among ALL dice (held + fresh) only if none held yet
+  const heldCount = held.filter(Boolean).length;
+  if (heldCount === 0) {
+    const sorted = [...dice].sort((a,b)=>a-b);
+    const s = JSON.stringify(sorted);
+    if (s === JSON.stringify([1,2,3,4,5]) || s === JSON.stringify([2,3,4,5,6])) return false;
+  }
+
+  // Check fresh dice for scoring potential
   const counts = [0,0,0,0,0,0,0];
-  vals.forEach(v => counts[v]++);
+  freshDice.forEach(v => counts[v]++);
+
+  // Single 1 or 5
   if (counts[1] > 0 || counts[5] > 0) return false;
-  if (counts[1] >= 3 || counts[2] >= 3 || counts[3] >= 3 || counts[4] >= 3 || counts[5] >= 3 || counts[6] >= 3) return false;
-  // Check straight among ALL dice (including held)
-  const allVals = [...dice];
-  const sorted = [...new Set(allVals)].sort((a,b)=>a-b);
-  if (JSON.stringify(sorted) === JSON.stringify([1,2,3,4,5]) || JSON.stringify(sorted) === JSON.stringify([2,3,4,5,6])) return false;
+
+  // Three of a kind among fresh dice
+  for (let v = 1; v <= 6; v++) {
+    if (counts[v] >= 3) return false;
+  }
+
+  // Three fives special (already covered above via counts[5])
   return true;
 }
 
