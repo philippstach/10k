@@ -99,6 +99,9 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
 .dot { width: 8px; height: 8px; border-radius: 50%; border: 1px solid var(--border2); background: transparent; flex-shrink: 0; }
 .dot.on { background: var(--danger); border-color: var(--danger); }
 .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.input-error { font-size: 13px; color: var(--danger); margin-top: -6px; margin-bottom: 8px; display: none; }
+.input-error.show { display: block; }
+input.error { border-color: var(--danger); }
 
 /* WINNER */
 .winner-header { text-align: center; padding: 2rem 0 1.5rem; position: relative; }
@@ -200,7 +203,8 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     <div class="card">
       <span class="label">Punkte dieser Runde</span>
       <input type="number" id="pts-input" placeholder="z.B. 250" inputmode="numeric"
-        onkeydown="if(event.key==='Enter') confirmPoints()" style="margin-bottom:12px;" />
+        onkeydown="if(event.key==='Enter') confirmPoints()" style="margin-bottom:8px;" oninput="clearError()" />
+      <div class="input-error" id="pts-error">⚠️ Nur Vielfache von 50 sind gültig (z.B. 50, 100, 150…)</div>
       <div class="action-row">
         <button class="btn btn-ghost" onclick="undoLast()">← Zurück</button>
         <button class="btn btn-danger" onclick="noPoints()">Keine Punkte</button>
@@ -245,7 +249,19 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     </div>
     <div class="rules-section">
       <strong>Ablauf</strong>
-      <p>Jeder würfelt reihum mit echten Würfeln und gibt seine Punkte in der App ein. Wer keine Punkte macht, drückt "Keine Punkte".</p>
+      <p>Jeder würfelt reihum mit allen 5 Würfeln. Man muss mindestens einen Würfel rauslegen (1er, 5er oder eine gültige Kombination) und kann dann entscheiden: aufhören und Punkte sichern, oder weiterwürfeln.</p>
+    </div>
+    <div class="rules-section">
+      <strong>Keine Punkte (Macke)</strong>
+      <p>Wenn nach einem Wurf kein einziger Würfel rausgelegt werden kann, ist das eine Macke – alle Punkte dieser Runde sind verloren.</p>
+    </div>
+    <div class="rules-section">
+      <strong>Alle Würfel sind Punkte</strong>
+      <p>Wenn alle 5 Würfel rausgelegt werden können, darf man nochmal mit allen 5 Würfeln neu würfeln – die gesammelten Punkte bleiben erhalten.</p>
+    </div>
+    <div class="rules-section">
+      <strong>Weiterwürfeln</strong>
+      <p>Hat der Vorspieler noch offene Würfel übrig, kann der nächste Spieler diese Würfel übernehmen und die Punkte des Vorspielers mitnehmen. Macht er eine Macke, verliert er alles.</p>
     </div>
     <div class="rules-section">
       <strong>Strafe</strong>
@@ -402,10 +418,22 @@ function renderGame() {
   setTimeout(() => document.getElementById('pts-input').focus(), 50);
 }
 
+function clearError() {
+  document.getElementById('pts-error').classList.remove('show');
+  document.getElementById('pts-input').classList.remove('error');
+}
+
+function showError() {
+  document.getElementById('pts-error').classList.add('show');
+  document.getElementById('pts-input').classList.add('error');
+}
+
 function confirmPoints() {
   const raw = document.getElementById('pts-input').value;
   const val = parseInt(raw);
   if (raw === '' || isNaN(val) || val <= 0) { noPoints(); return; }
+  if (val % 50 !== 0) { showError(); return; }
+  clearError();
   saveHist();
   players[cur].score += val;
   players[cur].streak = 0;
